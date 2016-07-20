@@ -27,6 +27,8 @@ library
                       , wai-cors
                       , transformers
                       , containers
+                      , network-anonymous-tor
+                      , network
   default-language:    Haskell2010
 
 executable server-exe
