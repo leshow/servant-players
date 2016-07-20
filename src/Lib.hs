@@ -21,26 +21,27 @@ import Network.Socket
 import System.IO
 import qualified Data.Map as M
 
-port = 4000
+port = 8081
 settings =
     setPort port $
     setBeforeMainLoop (hPutStrLn stderr
         ("listening on port " `mappend` show port))
     defaultSettings
-start :: IO ()
-start = runSettings settings =<< app
 
 -- start :: IO ()
--- start = T.withSession 9151 withinSession
---         where
---             withinSession :: Socket -> IO ()
---             withinSession sock = do
---               forkIO $ runSettings settings =<< app
---               onion <- T.mapOnion sock 80 3000 False Nothing
---               print onion
---               hWaitForInput stdin (-1)
---               putStrLn "Done!"
---               return ()
+-- start = runSettings settings =<< app
+
+start :: IO ()
+start = T.withSession 9151 withinSession
+        where
+            withinSession :: Socket -> IO ()
+            withinSession sock = do
+              forkIO $ runSettings settings =<< app
+              onion <- T.mapOnion sock 80 8081 False Nothing
+              print onion
+              hWaitForInput stdin (-1)
+              putStrLn "Done!"
+              return ()
 
 -- Note that  f <$> x  is the same thing as  do v <- x; return (f v)
 -- do { s <- return 1 ; return (s + 1) ; } :: Maybe Int    =====    return 1 >>= \s -> return (s + 1) :: Maybe Int
