@@ -16,6 +16,8 @@ import Network.Wai.Handler.Warp (runSettings, setPort, setBeforeMainLoop, defaul
 import Network.Wai.Middleware.Cors (simpleCors)
 import Network.Wai.Middleware.RequestLogger (logStdoutDev)
 import Servant (serve, (:<|>)(..), Proxy(..), Server, Handler, err404, err500)
+import qualified Network.Anonymous.Tor as T
+import Network.Socket
 import System.IO
 import qualified Data.Map as M
 
